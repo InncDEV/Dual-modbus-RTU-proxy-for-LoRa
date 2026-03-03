@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 InncDEV — https://github.com/InncDEV
+
 #include <Arduino.h>
 #include "config.h"
 #include "janitza_regs.h"
@@ -309,7 +312,22 @@ void loop() {
 
         bool crcOk = crcValid(masterBuf, masterLen);
 
+#if CRC_CHECK_MODE >= 1
+        if (!crcOk && masterLen > 0) {
+            statsMasterBad++;
+#if DEBUG_ENABLED
+            logTs(F("M>VS [CRC ERR] "));
+            printHexDump(masterBuf, masterLen);
+            DEBUG_SERIAL.println();
+#endif
+        }
+#endif
+
+#if CRC_CHECK_MODE >= 2
         if (crcOk && masterLen == 8) {
+#else
+        if (masterLen == 8) {
+#endif
             uint8_t func = masterBuf[1];
 
             if (func == 0x03 || func == 0x04) {
@@ -348,14 +366,6 @@ void loop() {
                 DEBUG_SERIAL.println();
 #endif
             }
-
-        } else if (!crcOk) {
-            statsMasterBad++;
-#if DEBUG_ENABLED
-            logTs(F("M>VS [CRC ERR] "));
-            printHexDump(masterBuf, masterLen);
-            DEBUG_SERIAL.println();
-#endif
         }
 
         masterLen = 0;

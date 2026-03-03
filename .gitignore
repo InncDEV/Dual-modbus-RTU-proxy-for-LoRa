@@ -5,3 +5,6 @@
 *.swo
 *~
 .DS_Store
+*.hex
+diagnose.py
+program_mega.sh

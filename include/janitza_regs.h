@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 InncDEV — https://github.com/InncDEV
+
 #pragma once
 #include <avr/pgmspace.h>
 
