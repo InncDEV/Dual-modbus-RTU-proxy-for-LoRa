@@ -130,4 +130,4 @@ Statistics print every 30 seconds showing cache hit/miss rates, LoRa success/fai
 
 ## License
 
-MIT
+GPL-3.0 — see [LICENSE](LICENSE) for details.
